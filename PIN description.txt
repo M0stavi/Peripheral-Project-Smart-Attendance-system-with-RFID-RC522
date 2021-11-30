@@ -1,0 +1,12 @@
+rfid522:
+SDA-10
+sck-13
+mosi-11
+mis-12
+gnd-gnd
+rst-9
+3.3-3.3
+
+
+buzzer:
+I/O-8
