@@ -1,7 +1,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
 #include <LiquidCrystal.h>
-LiquidCrystal lcd(1 ,2 ,4 ,5 ,6, 7);
+LiquidCrystal lcd(3 ,2 ,4 ,5 ,6, 7);
 
 #define SS_PIN 10
 #define RST_PIN 9
@@ -37,13 +37,19 @@ void loop() {
     //Serial.println(StrUID[0]);
     if(StrUID[0] == '1' && StrUID[1] == '7' && StrUID[2] == '0' &&StrUID[3] == '7' &&StrUID[4] == '0'){
           Serial.println( (String) "DATA,DATE,TIME," + StrUID );
+          String roll;
+//          strcpy(roll, StrUID);
+          roll = StrUID;
           tone(buzzer, 2000);
           delay(200);
           noTone(buzzer);
+          authenticatedPrint(roll);
+//          lcd.setCursor(1,1);
       }
     else{
 
       /*buzzer/LED code goes here*/
+      invalidMsg();
       tone(buzzer, 1000); // tone() is the main function to use with a buzzer, it takes 2 or 3 parameteres (buzzer pin, sound frequency, duration)
       delay(300);
       noTone(buzzer);
@@ -110,29 +116,41 @@ void array_to_string(byte array[], unsigned int len, char buffer[])
 
 
 void authenticatedPrint(String s)
-{
-    lcd. print("Verified");
-    delay(1500);
+{   
 
-    lcd.setCursor(1,1);
-    lcd.print("Welcome");
-    lcd.setCursor(2,1);
+    lcd.clear();
+    lcd.setCursor(0,0);
     lcd.print(s);
-    delay(2000);
-    lcd.setCursor(1,1)
-    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print("Recorded");
+    
+//    lcd.setCursor(0,0);
+    
+    
+//    lcd. print("Verified");
+//    delay(1500);
+//
+//    lcd.setCursor(1,1);
+//    lcd.print("Welcome");
+//    lcd.setCursor(2,1);
+//    lcd.print(s);
+//    delay(2000);
+//    lcd.setCursor(1,1);
+//    lcd.clear();
 }
 
-void welcomeMsg()
-{
-    lcd. print("Welcome");
-    delay(1000);
-    lcd.clear();
-}
+//void welcomeMsg()
+//{
+//    lcd. print("Welcome");
+//    delay(1000);
+//    lcd.clear();
+//}
 
 void invalidMsg()
-{
-    lcd. print("Not authorized");
-    delay(1000);
+{   
     lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Not authorized!");
+    lcd.setCursor(0,1);
+    lcd.print("Try again!");
 }
