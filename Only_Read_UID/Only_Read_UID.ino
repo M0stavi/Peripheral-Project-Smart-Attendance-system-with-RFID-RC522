@@ -1,5 +1,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(1 ,2 ,4 ,5 ,6, 7);
 
 #define SS_PIN 10
 #define RST_PIN 9
@@ -24,11 +26,12 @@ void setup() {
   
   Serial.println("Scan PICC to see UID...");
   Serial.println("");
+  lcd.begin(16,2);
 }
 // --------------------------------------------------------------------
 void loop() {
   readsuccess = getid();
- 
+  
   if(readsuccess){
     //Serial.println(StrUID[0]);
     //Serial.println(StrUID[0]);
@@ -103,4 +106,33 @@ void array_to_string(byte array[], unsigned int len, char buffer[])
         buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
     }
     buffer[len*2] = '\0';
+}
+
+
+void authenticatedPrint(String s)
+{
+    lcd. print("Verified");
+    delay(1500);
+
+    lcd.setCursor(1,1);
+    lcd.print("Welcome");
+    lcd.setCursor(2,1);
+    lcd.print(s);
+    delay(2000);
+    lcd.setCursor(1,1)
+    lcd.clear();
+}
+
+void welcomeMsg()
+{
+    lcd. print("Welcome");
+    delay(1000);
+    lcd.clear();
+}
+
+void invalidMsg()
+{
+    lcd. print("Not authorized");
+    delay(1000);
+    lcd.clear();
 }
