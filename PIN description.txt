@@ -10,3 +10,17 @@ rst-9
 
 buzzer:
 I/O-8
+
+lcd:
+vss-GND
+vdd-5v
+v0-middle of potentiometer
+rs-1
+rw-GND
+e-pin2
+d4-4
+d5-5
+d6-6
+d7-7
+a-5v
+k-GND
